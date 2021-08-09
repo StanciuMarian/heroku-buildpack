@@ -231,6 +231,9 @@ index-file.names = ( "index.html" )
 server.modules += ("mod_accesslog")
 accesslog.filename = "/dev/fd/3"
 include env.HOME + "/lighttpd-mime-types.conf"
+$HTTP["scheme"] == "http" {
+            url.redirect = ("" => "https://${url.authority}${url.path}${qsa}")
+}
 EOC
  result="$(cp include/lighttpd-mime-types.conf "${build_dir}/." 2>&1)" || \
   fail_cmd "Error copying lighttpd mime types include" "cp include/lighttpd-mime-types.conf \"${build_dir}/.\"" "${result}"
