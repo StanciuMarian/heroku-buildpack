@@ -228,7 +228,7 @@ else
 server.document-root = env.HOME + "/wwwroot"
 server.port = env.PORT
 index-file.names = ( "index.html" )
-server.modules += ("mod_accesslog")
+server.modules += ("mod_accesslog", "mod_redirect")
 accesslog.filename = "/dev/fd/3"
 include env.HOME + "/lighttpd-mime-types.conf"
 \$HTTP["scheme"] == "http" {
