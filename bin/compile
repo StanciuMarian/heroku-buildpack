@@ -232,7 +232,11 @@ server.modules += ("mod_accesslog", "mod_redirect")
 accesslog.filename = "/dev/fd/3"
 include env.HOME + "/lighttpd-mime-types.conf"
 \$HTTP["scheme"] == "http" {
-            url.redirect = ("" => "https://\${url.authority}\${url.path}\${qsa}")
+    # capture vhost name with regex conditiona -> %0 in redirect pattern
+    # must be the most inner block to the redirect rule
+    \$HTTP["host"] =~ ".*" {
+        url.redirect = (".*" => "https://%0\$0")
+    }
 }
 EOC
  result="$(cp include/lighttpd-mime-types.conf "${build_dir}/." 2>&1)" || \
